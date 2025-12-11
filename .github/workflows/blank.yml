@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4966695885706480~5693107628
+"
+        crossorigin="anonymous"></script>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiPix - Professional Image Compressor</title>
+    <meta name="description" content="Free online image compressor. Reduce image size without losing quality.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338ca;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Navbar Styles --- */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .live-status {
+            font-size: 0.85rem;
+            background: #ecfdf5;
+            color: var(--success);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid #d1fae5;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- Ads --- */
+        .ad-banner {
+            width: 100%;
+            max-width: 970px;
+            height: 90px;
+            background-color: #f1f1f1;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            border: 1px dashed #ccc;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* --- Pages / Sections --- */
+        .page-section {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-section.active-section {
+            display: grid; /* or block depending on page */
+        }
+
+        /* Home Page Layout */
+        #home-section.active-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        /* Text Pages Layout (Privacy, About, etc) */
+        .text-page {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .text-page h1 { margin-bottom: 20px; color: var(--primary); }
+        .text-page h2 { margin-top: 25px; margin-bottom: 10px; font-size: 1.2rem; }
+        .text-page p { margin-bottom: 15px; color: #4b5563; }
+        .text-page ul { margin-left: 20px; margin-bottom: 15px; color: #4b5563; }
+
+        /* Contact Form */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-input {
+            width: 100%; padding: 10px; border: 1px solid var(--border);
+            border-radius: 6px; font-family: inherit;
+        }
+        .form-textarea { height: 120px; resize: vertical; }
+
+        /* --- Compressor Tool Styles --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            font-size: 1.25rem; font-weight: 700; margin-bottom: 20px;
+            border-bottom: 1px solid var(--border); padding-bottom: 15px;
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--primary);
+            background: #eef2ff;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .upload-zone:hover { background: #e0e7ff; }
+        .upload-zone input {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer;
+        }
+        
+        .preview-container {
+            display: none; margin-top: 25px;
+            grid-template-columns: 1fr 1fr; gap: 20px;
+        }
+        .img-box { text-align: center; }
+        .img-box img { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); margin-top: 8px; }
+        .size-badge { background: #374151; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+
+        .btn {
+            background-color: var(--primary); color: white; padding: 12px; border: none;
+            border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 20px;
+            font-size: 1rem; transition: background 0.2s;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
+
+        /* Stats Sidebar */
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px; }
+        .stat-value { font-weight: 600; color: var(--primary); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar { height: auto; padding: 15px; flex-direction: column; gap: 15px; }
+            .nav-menu { gap: 15px; flex-wrap: wrap; justify-content: center; font-size: 0.85rem; }
+            .nav-item.active::after { bottom: -5px; }
+            #home-section.active-section { grid-template-columns: 1fr; }
+            .preview-container { grid-template-columns: 1fr; }
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <nav class="navbar">
+        <div class="logo" onclick="switchPage('home')">
+            <i class="fas fa-layer-group"></i> OptiPix
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item active" onclick="switchPage('home')">Home</li>
+            <li class="nav-item" onclick="switchPage('about')">About</li>
+            <li class="nav-item" onclick="switchPage('privacy')">Privacy Policy</li>
+            <li class="nav-item" onclick="switchPage('terms')">Terms</li>
+            <li class="nav-item" onclick="switchPage('contact')">Contact Us</li>
+        </ul>
+
+        <div class="live-status">
+            <span class="dot"></span> Live Net
+        </div>
+    </nav>
+
+    <!-- Top Ad Banner -->
+    <div class="ad-banner">
+        <!-- PASTE GOOGLE ADSENSE CODE HERE -->
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4966695885706480~5693107628"
+     data-ad-slot="4218850480"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- ========================================== -->
+        <!-- HOME PAGE (Tool + Stats) -->
+        <!-- ========================================== -->
+        <section id="home-section" class="page-section active-section">
+            <!-- Left Column: Compressor -->
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-compress-arrows-alt"></i> Upload Image</div>
+                    
+                    <div class="upload-zone" id="dropZone">
+                        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h3>Click to Upload or Drag & Drop</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">JPG, JPEG, PNG supported</p>
+                    </div>
+
+                    <div id="controls" style="display: none; margin-top: 20px;">
+                        <label style="font-weight:600;">Compression Quality: <span id="qualityValue">70%</span></label>
+                        <input type="range" id="qualityRange" min="10" max="100" value="70" style="width: 100%; margin-top: 10px; accent-color: var(--primary);">
+                    </div>
+
+                    <div class="preview-container" id="previewContainer">
+                        <div class="img-box">
+                            <p style="font-size: 0.9rem; margin-bottom: 5px;">Original</p>
+                            <span class="size-badge" id="originalSize">0 KB</span>
+                            <img id="originalImg" src="" alt="Original">
+                        </div>
+                        <div class="img-box">
+                            <p style="font-size: 0.9rem; margin-bottom: 5px;">Compressed</p>
+                            <span class="size-badge" id="compressedSize" style="background: var(--success)">0 KB</span>
+                            <img id="compressedImg" src="" alt="Compressed">
+                        </div>
+                    </div>
+
+                    <button class="btn" id="downloadBtn" disabled>
+                        <i class="fas fa-download"></i> Download Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Sidebar -->
+            <div class="sidebar">
+                <!-- Network Stats -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header"><i class="fas fa-tachometer-alt"></i> Speed & Time</div>
+                    
+                    <div class="stat-row">
+                        <span>Net Speed:</span>
+                        <span class="stat-value" id="netSpeed">Checking...</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Est. Upload Time:</span>
+                        <span class="stat-value" id="estTime">0.00s</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 10px;">
+                        *Time calculated based on the current file size and your internet speed.
+                    </p>
+                </div>
+
+                <!-- Sidebar Ad -->
+                <div class="ad-banner" style="height: 250px; width: 100%; max-width: 100%;">
+                    <!-- PASTE GOOGLE ADSENSE CODE HERE -->
+                    AdSense Square (300x250)
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- ABOUT PAGE -->
+        <!-- ========================================== -->
+        <section id="about-section" class="page-section">
+            <div class="text-page">
+                <h1>About OptiPix</h1>
+                <p>Welcome to OptiPix, the most efficient and user-friendly image compression tool on the web.</p>
+                <p>Our mission is to help web developers, designers, and content creators make the web faster by reducing image file sizes without compromising visual quality.</p>
+                <h2>Why use OptiPix?</h2>
+                <ul>
+                    <li><strong>Privacy First:</strong> Image compression happens locally in your browser. Your images are never uploaded to our servers.</li>
+                    <li><strong>Fast & Free:</strong> Unlimited compression with zero cost.</li>
+                    <li><strong>Live Stats:</strong> Monitor your internet connection speed and estimated upload times in real-time.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PRIVACY POLICY PAGE -->
+        <!-- ========================================== -->
+        <section id="privacy-section" class="page-section">
+            <div class="text-page">
+                <h1>Privacy Policy</h1>
+                <p>Last updated: October 2023</p>
+                <p>At OptiPix, accessible from this website, one of our main priorities is the privacy of our visitors.</p>
+                
+                <h2>1. Information We Collect</h2>
+                <p>OptiPix operates as a client-side tool. This means when you compress an image, the processing is done within your own web browser. <strong>We do not upload or store your images on our servers.</strong></p>
+
+                <h2>2. Advertising Partners</h2>
+                <p>We use Google AdSense to display advertisements. Google uses cookies to serve ads based on your prior visits to our website or other websites.</p>
+
+                <h2>3. Consent</h2>
+                <p>By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TERMS CONDITIONS PAGE -->
+        <!-- ========================================== -->
+        <section id="terms-section" class="page-section">
+            <div class="text-page">
+                <h1>Terms & Conditions</h1>
+                <h2>1. Usage License</h2>
+                <p>Permission is granted to use OptiPix for personal and commercial purposes freely. You may not attempt to reverse engineer the code.</p>
+
+                <h2>2. Disclaimer</h2>
+                <p>The materials on OptiPix are provided on an 'as is' basis. We make no warranties, expressed or implied, regarding the accuracy or reliability of the tool.</p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- CONTACT US PAGE -->
+        <!-- ========================================== -->
+        <section id="contact-section" class="page-section">
+            <div class="text-page">
+                <h1>Contact Us</h1>
+                <p>Have questions or suggestions? We'd love to hear from you.</p>
+                
+                <form onsubmit="event.preventDefault(); alert('Message sent! (Demo)');">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-input form-textarea" placeholder="How can we help?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: auto; padding: 10px 30px;">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Bottom Ad Banner -->
+    <div class="ad-banner">
+        <!-- PASTE GOOGLE ADSENSE CODE HERE -->
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4966695885706480~5693107628"
+     data-ad-slot="4218850480"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Navigation Logic ---
+        function switchPage(pageName) {
+            // 1. Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            // 2. Show target section
+            const target = document.getElementById(pageName + '-section');
+            if(target) target.classList.add('active-section');
+
+            // 3. Update Nav Link Active State
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Find the clicked item based on text content or attribute (simple text match here)
+            navItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if(text.includes(pageName === 'home' ? 'home' : 
+                               pageName === 'about' ? 'about' : 
+                               pageName === 'privacy' ? 'privacy' : 
+                               pageName === 'terms' ? 'terms' : 'contact')) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // --- Network Speed Logic ---
+        const netSpeedEl = document.getElementById('netSpeed');
+        const estTimeEl = document.getElementById('estTime');
+        let currentFileSize = 0;
+
+        function updateNetworkStatus() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (connection) {
+                const speed = connection.downlink; // Approx Mbps
+                netSpeedEl.textContent = speed + ' Mbps';
+                
+                // Recalculate time if file exists
+                if(currentFileSize > 0) {
+                    calculateTime(currentFileSize, speed);
+                }
+
+                connection.addEventListener('change', updateNetworkStatus);
+            } else {
+                netSpeedEl.textContent = 'Unknown';
+            }
+        }
+
+        function calculateTime(bytes, speedMbps) {
+            if(!speedMbps || speedMbps === 0) return;
+            const bits = bytes * 8;
+            const bps = speedMbps * 1000000;
+            const seconds = (bits / bps).toFixed(2);
+            estTimeEl.textContent = seconds + 's';
+            estTimeEl.style.color = seconds < 2 ? 'var(--success)' : '#dc2626';
+        }
+
+        updateNetworkStatus();
+
+        // --- Image Compression Logic ---
+        const imageInput = document.getElementById('imageInput');
+        const qualityRange = document.getElementById('qualityRange');
+        const qualityValue = document.getElementById('qualityValue');
+        const originalImg = document.getElementById('originalImg');
+        const compressedImg = document.getElementById('compressedImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            currentFileSize = file.size;
+            document.getElementById('originalSize').textContent = formatBytes(file.size);
+            
+            // Trigger Time Calculation
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if(connection) calculateTime(currentFileSize, connection.downlink);
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                originalImg.src = event.target.result;
+                document.getElementById('controls').style.display = 'block';
+                document.getElementById('previewContainer').style.display = 'grid';
+                compressImage(event.target.result, qualityRange.value / 100);
+            }
+            reader.readAsDataURL(file);
+        });
+
+        qualityRange.addEventListener('input', function() {
+            qualityValue.textContent = this.value + '%';
+            if(originalImg.src) compressImage(originalImg.src, this.value / 100);
+        });
+
+        function compressImage(source, quality) {
+            const img = new Image();
+            img.src = source;
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                compressedImg.src = compressedDataUrl;
+                
+                // Calc Size
+                const head = 'data:image/jpeg;base64,';
+                const size = Math.round((compressedDataUrl.length - head.length) * 3 / 4);
+                document.getElementById('compressedSize').textContent = formatBytes(size);
+
+                downloadBtn.disabled = false;
+                downloadBtn.onclick = () => {
+                    const link = document.createElement('a');
+                    link.download = 'optipix-compressed.jpg';
+                    link.href = compressedDataUrl;
+                    link.click();
+                };
+            }
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
